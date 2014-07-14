@@ -30,9 +30,11 @@ pip-delete-this-directory.txt
 htmlcov/
 .tox/
 .coverage
+.coverage.*
 .cache
 nosetests.xml
 coverage.xml
+htmlcov
 
 # Translations
 *.mo
@@ -45,10 +47,16 @@ coverage.xml
 # Rope
 .ropeproject
 
-# Django stuff:
-*.log
-*.pot
+# Complexity
+output/*.html
+output/*/index.html
 
 # Sphinx documentation
 docs/_build/
 
+.DS_Store
+*~
+.*.sw[po]
+.build
+.ve
+.bootstrap
