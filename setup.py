@@ -60,7 +60,7 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "kdenlive-tools = kdenlive-tools.cli:main"
+            "kdenlive-tools = kdenlive_tools.cli:main"
         ]
     }
 

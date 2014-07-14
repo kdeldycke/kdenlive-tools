@@ -18,7 +18,7 @@ def main(count, name, debug):
     for x in range(count):
         click.echo('Hello %s!' % name)
 
-    log.debug('Goodbye %s!' % name)import lxml
+    log.debug('Goodbye %s!' % name)
 
 
 FILE = './project.kdenlive'
