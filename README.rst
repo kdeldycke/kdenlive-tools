@@ -24,7 +24,7 @@ Kdenlive tools
     :alt: PYPI Package
     :target: https://pypi.python.org/pypi/kdenlive-tools
 
-Toolbox ffor kdenlive projects.
+Toolbox for kdenlive projects.
 
 * Free software: BSD license
 

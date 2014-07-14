@@ -21,7 +21,7 @@ setup(
     name="kdenlive-tools",
     version="0.0.1",
     license="BSD",
-    description="Toolbox ffor kdenlive projects.",
+    description="Toolbox for kdenlive projects.",
     long_description="%s\n%s" % (read("README.rst"), re.sub(":obj:`~?(.*?)`", r"``\1``", read("CHANGELOG.rst"))),
     author="Kevin Deldycke",
     author_email="kevin@deldycke.com",
