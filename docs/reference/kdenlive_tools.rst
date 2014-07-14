@@ -1,4 +1,4 @@
-kdenlive-tools
+kdenlive_tools
 =============================
 
 .. automodule:: kdenlive_tools
