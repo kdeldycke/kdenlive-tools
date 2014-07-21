@@ -35,7 +35,7 @@ Installation
 First, if the ``python-lxml`` package is not installed on your system, you will
 need XML libraries::
 
-    $ sudo aptitude install libxml2-dev libxslt-dev
+    $ sudo aptitude install libxml2-dev libxslt-dev zlib1g-dev
 
 Only then you'll be able to install the package and its python dependencies::
 
