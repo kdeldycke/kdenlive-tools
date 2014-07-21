@@ -28,17 +28,25 @@ Toolbox for kdenlive projects.
 
 * Free software: BSD license
 
+
 Installation
 ============
 
-::
+First, if the ``python-lxml`` package is not installed on your system, you will
+need XML libraries::
 
-    pip install kdenlive-tools
+    $ sudo aptitude install libxml2-dev libxslt-dev
+
+Only then you'll be able to install the package and its python dependencies::
+
+    $ pip install kdenlive-tools
+
 
 Documentation
 =============
 
 https://kdenlive-tools.readthedocs.org/
+
 
 Development
 ===========
