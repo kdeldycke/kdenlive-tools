@@ -35,6 +35,8 @@ setup(
         # complete classifier list: http://pypi.python.org/pypi?%3Aaction=list_classifiers
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
+        "Intended Audience :: End Users/Desktop",
+        "Intended Audience :: Other Audience",
         "License :: OSI Approved :: BSD License",
         "Operating System :: Unix",
         "Operating System :: POSIX",
@@ -47,6 +49,10 @@ setup(
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
+        "Environment :: Console",
+        "Topic :: Artistic Software",
+        "Topic :: Multimedia :: Video",
+        "Topic :: Multimedia :: Video :: Non-Linear Editor",
         "Topic :: Utilities",
     ],
     keywords=[
