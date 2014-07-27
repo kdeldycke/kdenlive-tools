@@ -5,6 +5,7 @@ from __future__ import (
 
 import logging
 import os
+from operator import itemgetter
 
 import click
 from lxml import etree
@@ -21,6 +22,9 @@ class Project(object):
     Project files are XML documents containing description of resources and
     timelines.
     """
+
+    # List of MLT services consumming file-based resources.
+    FILE_BASED_SERVICES = ('avformat', 'pixbuf')
 
     def __init__(self, project_file):
         self.project_file = project_file
@@ -55,9 +59,11 @@ def cli(ctx, project, verbose):
 
 
 @cli.command()
+@click.option('--full-path/--file-name', default=False,
+              help='Print full resource file path or only its file name.')
 @pass_project
-def list_producers(project):
-    """ List producer IDs and their source files.
+def list_producers(project, full_path):
+    """ List producer IDs, type and resource.
 
     TODO: add options to configure output.
     """
@@ -65,15 +71,35 @@ def list_producers(project):
     resource_map = {}
     producers = project.tree.xpath('/mlt/producer')
     for producer in producers:
+        # Fetch ID
+        producer_id = producer.get('id')
+        # Fetch type
+        producer_types = producer.xpath('property[@name="mlt_service"]/text()')
+        assert len(producer_types) == 1
+        producer_type = producer_types.pop()
+        # Fetch resource
         resources = producer.xpath('property[@name="resource"]/text()')
         assert len(resources) == 1
-        producer_id = producer.get('id')
-        resource_map[producer_id] = resources[0]
+        resource = resources.pop()
+        if not full_path and producer_type in Project.FILE_BASED_SERVICES:
+            resource = os.path.basename(resource)
+        # Assemble producer properties
+        resource_map[producer_id] = {
+            'resource': resource,
+            'type': producer_type}
 
-    # Print mapping
-    for producer_id, resource_file in resource_map.items():
-        click.echo('{} :> {}.'.format(
-            producer_id, resource_file))
+    # Prepare the table of results, sorted by producer IDs
+    print_table = sorted(resource_map.items(), key=itemgetter(0))
+    # Add header
+    print_table.insert(0, ('Producer ID',
+                           {'resource': 'Resource file', 'type': 'Resource type'}))
+
+    # Print a formatted table
+    max_id_lenght = max([len(row[0]) for row in print_table])
+    max_type_lenght = max([len(row[1]['type']) for row in print_table])
+    for producer_id, properties in print_table:
+        click.echo('{:>{}} | {type:>{}} | {resource}'.format(
+            producer_id, max_id_lenght, max_type_lenght, **properties))
 
 
 @cli.command(short_help="Replace producer's clips in timeline by another.")
