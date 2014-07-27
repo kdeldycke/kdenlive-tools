@@ -24,9 +24,11 @@ Kdenlive tools
     :alt: PYPI Package
     :target: https://pypi.python.org/pypi/kdenlive-tools
 
-Toolbox for kdenlive projects.
+Command line tool to fiddle with kdenlive projects.
 
-* Free software: BSD license
+* List producers.
+* Replace producer's clips.
+* Free software: BSD license.
 
 
 Installation
