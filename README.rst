@@ -67,4 +67,7 @@ Release
 
 To release a new minor version::
 
-    $ bumpversion --allow-dirty minor
+    $ bumpversion --versbose --allow-dirty minor
+    $ python setup.py register -r testpypi
+    $ python setup.py sdist upload -r testpypi
+    $ git push --tags
