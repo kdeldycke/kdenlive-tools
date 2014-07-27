@@ -3,6 +3,7 @@ from __future__ import (
     division, print_function, absolute_import, unicode_literals
 )
 
+import tempfile
 import logging
 import os
 from operator import itemgetter
@@ -52,7 +53,7 @@ def cli(ctx, project, verbose):
     """ Tool to fiddle with the Kdenlive PROJECT file. """
     logging.basicConfig(level=logging.DEBUG if verbose else logging.INFO)
 
-    click.echo('Parsing project file {!r}...'.format(
+    click.echo('Parsing project file {} ...'.format(
         os.path.abspath(project.name)))
     ctx.obj = Project(project)
     ctx.obj.parse()
@@ -105,24 +106,37 @@ def list_producers(project, full_path):
 @cli.command(short_help="Replace producer's clips in timeline by another.")
 @click.argument('source_id')
 @click.argument('target_id')
-@click.argument('output', type=click.File('wb'))
+@click.argument('output', type=click.File('wb'), required=False, default=None)
+@click.option('--inplace', is_flag=True, default=False,
+              help='Save results in source project.')
 @pass_project
-def replace_producer(project, output, source_id, target_id):
+def replace_producer(project, output, source_id, target_id, inplace):
     """ Replace, in all timelines, all occurences of producer's clips by another.
 
-    TODO: add --inplace option.
     TODO: add option to restrict action by timelines.
     """
-    click.echo('Replacing producer ID:{!r} by producer ID:{!r}.'.format(
+    click.echo('Replacing producer {} by producer {}:'.format(
         source_id, target_id))
     source_entries = project.tree.xpath('/mlt/playlist/entry[@producer="{}"]'.format(source_id))
-    for entry in source_entries:
-        entry.attrib['producer'] = target_id
+    with click.progressbar(source_entries) as entries:
+        for entry in entries:
+            entry.attrib['producer'] = target_id
 
-    click.echo('{} occurences of producer {} replaced by producer {}.'.format(
+    click.echo('{} occurences replaced.'.format(
         len(source_entries), source_id, target_id))
 
-    click.echo('Saving results to file {!r} ...'.format(output))
+    if inplace:
+        # Reopen file for writting.
+        project.project_file.close()
+        output = open(project.project_file.name, 'wb')
+    elif not output:
+        # Create a sibling file along the original one for writting
+        output_folder, output_filename = os.path.split(project.project_file.name)
+        _, output_path = tempfile.mkstemp(
+            '.kdenlive', os.path.splitext(output_filename)[0] + '-', output_folder)
+        output = open(output_path, 'wb')
+
+    click.echo('Saving results to file {} ...'.format(os.path.abspath(output.name)))
     output.write(etree.tostring(project.tree.getroot(), xml_declaration=True,
                                 pretty_print=True, encoding='UTF-8'))
 
