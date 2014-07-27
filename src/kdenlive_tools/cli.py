@@ -45,7 +45,7 @@ pass_project = click.make_pass_decorator(Project)
               help='Print much more debug statements.')
 @click.pass_context
 def cli(ctx, project, verbose):
-    """ Tools to fiddle with the PROJECT Kdenlive project file. """
+    """ Tool to fiddle with the Kdenlive PROJECT file. """
     logging.basicConfig(level=logging.DEBUG if verbose else logging.INFO)
 
     click.echo('Parsing project file {!r}...'.format(
