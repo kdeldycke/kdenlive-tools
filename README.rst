@@ -53,6 +53,18 @@ https://kdenlive-tools.readthedocs.org/
 Development
 ===========
 
+
+Unit-tests
+----------
+
 To run the all tests run::
 
-    tox
+    $ tox
+
+
+Release
+-------
+
+To release a new minor version::
+
+    $ bumpversion --allow-dirty minor
