@@ -19,7 +19,7 @@ def read(*names, **kwargs):
 
 setup(
     name="kdenlive-tools",
-    version="0.0.1",
+    version="0.1.0",
     license="BSD",
     description="Command line tools for Kdenlive projects.",
     long_description="%s\n%s" % (read("README.rst"), re.sub(":obj:`~?(.*?)`", r"``\1``", read("CHANGELOG.rst"))),
