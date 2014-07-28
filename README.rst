@@ -71,3 +71,5 @@ To release a new minor version::
     $ python setup.py register -r testpypi
     $ python setup.py sdist upload -r testpypi
     $ git push --tags
+    $ python setup.py register -r pypi
+    $ python setup.py sdist upload -r pypi
